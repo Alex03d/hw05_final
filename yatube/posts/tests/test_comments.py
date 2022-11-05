@@ -1,4 +1,3 @@
-import shutil
 import tempfile
 
 from django.conf import settings
@@ -16,16 +15,15 @@ class PostCommentsTest(TestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.author_post = User.objects.create_user(username='author_post')
-        cls.authorized_user = User.objects.create_user(username='authorized_user')
+        cls.authorized_user = User.objects.create_user(
+            username='authorized_user')
         cls.post = Post.objects.create(
             author=cls.author_post,
-            text='Текстовый пост',
-        )
+            text='Текстовый пост',)
         cls.comment = Comment.objects.create(
             post=cls.post,
             author=cls.author_post,
-            text='Тестовый комментарий'
-            ),
+            text='Тестовый комментарий'),
 
     def setUp(self):
         self.author_post = Client()

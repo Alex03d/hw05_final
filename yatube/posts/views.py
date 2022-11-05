@@ -1,7 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.csrf import csrf_protect
-# from django.views.decorators.cache import cache_page
 
 
 from .forms import PostForm, CommentForm
@@ -9,7 +8,6 @@ from .models import Group, Post, User, Comment, Follow
 from .utils import external_paginator
 
 
-# @cache_page(20, key_prefix='index_page')
 def index(request):
     post_list = Post.objects.select_related('group', 'author')
 

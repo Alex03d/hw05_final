@@ -11,8 +11,10 @@ class PostViewTest(TestCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.author_post = User.objects.create_user(username='author_post')
-        cls.authorized_user = User.objects.create_user(username='authorized_user')
-        cls.subscribed_user = User.objects.create_user(username='subscribed_user')
+        cls.authorized_user = User.objects.create_user(
+            username='authorized_user')
+        cls.subscribed_user = User.objects.create_user(
+            username='subscribed_user')
         cls.group = Group.objects.create(
             title='Тестовая группа',
             slug='test-slug',
@@ -121,8 +123,7 @@ class PostViewTest(TestCase):
     def test_follow_function(self):
         Follow.objects.create(
             user=User.objects.get(username='subscribed_user'),
-            author=User.objects.get(username='author_post')
-        )
+            author=User.objects.get(username='author_post'))
         followers_count = Follow.objects.count()
         self.authorized_client.get(
                 reverse(
@@ -138,8 +139,7 @@ class PostViewTest(TestCase):
     def test_appearance_of_followed_authors_posts(self):
         Follow.objects.create(
             user=User.objects.get(username='subscribed_user'),
-            author=User.objects.get(username='author_post')
-        )
+            author=User.objects.get(username='author_post'))
         Post.objects.create(
             text='Тест подписок',
             author=User.objects.get(username='author_post'),
@@ -152,5 +152,6 @@ class PostViewTest(TestCase):
             reverse('posts:follow_index'))
         followed_post = response_for_follower.context['page_obj'][0]
         self.assertEqual(str(followed_post), 'Тест подписок')
-        response_for_not_follower = self.client.get(reverse('posts:follow_index'))
+        response_for_not_follower = self.client.get(
+            reverse('posts:follow_index'))
         self.assertNotIn(str(followed_post), response_for_not_follower)
