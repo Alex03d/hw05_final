@@ -126,14 +126,14 @@ class PostViewTest(TestCase):
             author=User.objects.get(username='author_post'))
         followers_count = Follow.objects.count()
         self.authorized_client.get(
-                reverse(
-                    'posts:profile_follow',
-                    kwargs={'username': 'author_post'}))
+            reverse(
+                'posts:profile_follow',
+                kwargs={'username': 'author_post'}))
         self.assertEqual(Follow.objects.count(), followers_count + 1)
         self.authorized_client.get(
-                reverse(
-                    'posts:profile_unfollow',
-                    kwargs={'username': 'author_post'}))
+            reverse(
+                'posts:profile_unfollow',
+                kwargs={'username': 'author_post'}))
         self.assertEqual(Follow.objects.count(), followers_count)
 
     def test_appearance_of_followed_authors_posts(self):
@@ -145,9 +145,9 @@ class PostViewTest(TestCase):
             author=User.objects.get(username='author_post'),
         )
         self.authorized_client.get(
-                reverse(
-                    'posts:profile_follow',
-                    kwargs={'username': 'author_post'}))
+            reverse(
+                'posts:profile_follow',
+                kwargs={'username': 'author_post'}))
         response_for_follower = self.authorized_client.get(
             reverse('posts:follow_index'))
         followed_post = response_for_follower.context['page_obj'][0]
