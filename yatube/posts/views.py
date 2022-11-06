@@ -28,7 +28,7 @@ def profile(request, username):
         'author': author,
         'page_obj': external_paginator(request, post_list),
         'comments': posts_comment,
-        "following": following,
+        'following': following,
         'user': user,
     }
     return render(request, 'posts/profile.html', context)
