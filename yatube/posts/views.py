@@ -2,7 +2,6 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.csrf import csrf_protect
 
-
 from .forms import PostForm, CommentForm
 from .models import Group, Post, User, Comment, Follow
 from .utils import external_paginator
@@ -21,7 +20,6 @@ def profile(request, username):
     author = get_object_or_404(User, username=username)
     post_list = author.posts.all()
     posts_comment = author.comments.all()
-    user = request.user
     following = Follow.objects.filter(author=author, user=request.user.id)
 
     context = {
@@ -29,7 +27,7 @@ def profile(request, username):
         'page_obj': external_paginator(request, post_list),
         'comments': posts_comment,
         'following': following,
-        'user': user,
+        'user': request.user,
     }
     return render(request, 'posts/profile.html', context)
 
